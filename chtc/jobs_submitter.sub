@@ -1,0 +1,25 @@
+# Submit jobs.
+
+# Provide HTCondor with the name of your .sif file and universe information
+# (`universe = container` is optional as long as `container_image` is specified)
+container_image = pytch113_container.sif
+universe = container
+
+executable = executable_for_job.sh
+arguments = $(DATAFILE) $(PARAM) $(OUTDIR)
+
+# Tell HTCondor to transfer the my-container.sif file to each job
+transfer_input_files = file:///staging/pravindran/pytch113_container.sif, main.py, params.py, data/$(DATAFILE)
+transfer_output_files = $(OUTDIR)/$(DATAFILE)_X$(PARAM).pt
+transfer_output_remaps = "$(DATAFILE)_X$(PARAM).pt = out/$(DATAFILE)_X$(PARAM).pt"
+
+log = logs/$(CLUSTER).log
+error = errors/$(CLUSTER)_$(PROCESS).err
+output = outputs/$(CLUSTER)_$(PROCESS).out
+
+# Make sure you request enough disk for the container image in addition to your other input files
+request_cpus = 4
+request_memory = 32GB
+request_disk = 64GB      
+
+queue DATAFILE, PARAM, OUTDIR from params_for_jobs.txt
