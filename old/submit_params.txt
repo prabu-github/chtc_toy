@@ -1,0 +1,6 @@
+t1.pt, out, double
+t1.pt, out, triple
+t1.pt, out, quadruple
+t2.pt, out, double
+t2.pt, out, triple
+t2.pt, out, quadruple

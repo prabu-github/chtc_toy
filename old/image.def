@@ -1,0 +1,5 @@
+Bootstrap: docker
+From: continuumio/anaconda3:2023.07-1
+
+%post
+    conda install python=3.9 pytorch==1.13.0 torchvision==0.14.0 torchaudio==0.13.0 pytorch-cuda=11.7 -c pytorch -c nvidia
